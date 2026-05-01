@@ -15,6 +15,7 @@
             background-color: #ffdde1;
             font-family: 'Arial', sans-serif;
             text-align: center;
+            overflow: hidden; /* Prevents scrollbars when buttons move */
         }
 
         #container {
@@ -38,6 +39,8 @@
             align-items: center;
             margin-top: 20px;
             flex-wrap: wrap;
+            position: relative;
+            min-height: 100px;
         }
 
         button {
@@ -52,11 +55,14 @@
         #yesBtn {
             background-color: #28a745;
             color: white;
+            z-index: 2;
         }
 
         #noBtn {
             background-color: #dc3545;
             color: white;
+            position: absolute; /* Allows it to move anywhere freely */
+            transition: none; /* Instant reaction on hover */
         }
 
         .success-msg {
@@ -101,17 +107,33 @@
         ];
         let noCount = 0;
 
-        noBtn.addEventListener('click', () => {
-            // Make the Yes button bigger
-            yesFontSize += 0.5;
-            yesBtn.style.fontSize = `${yesFontSize}rem`;
-            yesBtn.style.padding = `${yesFontSize * 10}px ${yesFontSize * 20}px`;
+        // Function to move the "No" button to a random position
+        function moveNoButton() {
+            // Get viewport boundaries minus button size
+            const x = Math.random() * (window.innerWidth - noBtn.clientWidth - 40);
+            const y = Math.random() * (window.innerHeight - noBtn.clientHeight - 40);
 
-            // Change the text of the No button
+            noBtn.style.left = `${x}px`;
+            noBtn.style.top = `${y}px`;
+
+            // Update button text progressively on hover movement
             noBtn.innerText = noTexts[Math.min(noCount, noTexts.length - 1)];
             noCount++;
+
+            // Grow the Yes button on each hover
+            yesFontSize += 0.4;
+            yesBtn.style.fontSize = `${yesFontSize}rem`;
+            yesBtn.style.padding = `${yesFontSize * 10}px ${yesFontSize * 20}px`;
+        }
+
+        // Trigger on hover (mouseover or touch interactions)
+        noBtn.addEventListener('mouseover', moveNoButton);
+        noBtn.addEventListener('touchstart', (e) => {
+            e.preventDefault(); // Prevents zoom/selection on mobile
+            moveNoButton();
         });
 
+        // Yes button behavior
         yesBtn.addEventListener('click', () => {
             container.style.display = 'none';
             success.style.display = 'block';
