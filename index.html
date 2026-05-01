@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Valentine's Day</title>
+    <style>
+        body {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            height: 100vh;
+            margin: 0;
+            background-color: #ffdde1;
+            font-family: 'Arial', sans-serif;
+            text-align: center;
+        }
+
+        #container {
+            padding: 20px;
+        }
+
+        img {
+            max-width: 200px;
+            margin-bottom: 20px;
+        }
+
+        h1 {
+            color: #d63384;
+            font-size: 2rem;
+        }
+
+        .buttons {
+            display: flex;
+            gap: 20px;
+            justify-content: center;
+            align-items: center;
+            margin-top: 20px;
+            flex-wrap: wrap;
+        }
+
+        button {
+            padding: 10px 20px;
+            font-size: 1.2rem;
+            border: none;
+            border-radius: 10px;
+            cursor: pointer;
+            transition: all 0.2s ease;
+        }
+
+        #yesBtn {
+            background-color: #28a745;
+            color: white;
+        }
+
+        #noBtn {
+            background-color: #dc3545;
+            color: white;
+        }
+
+        .success-msg {
+            display: none;
+            font-size: 2.5rem;
+            color: #d63384;
+        }
+    </style>
+</head>
+<body>
+
+    <div id="container">
+        <img id="displayImg" src="https://media.giphy.com/media/v1.Y2lkPTc5MGI3NjExOHpndWp6Zmt6Y3N6eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4JmVwPXYxX2ludGVybmFsX2dpZl9ieV9pZCZjdD1n/c76IJLufpN61i/giphy.gif" alt="Cute GIF">
+        <h1 id="question">Will you be my Valentine, Ahmed Ali?</h1>
+        
+        <div class="buttons" id="btnWrapper">
+            <button id="yesBtn">Yes</button>
+            <button id="noBtn">No</button>
+        </div>
+    </div>
+
+    <div id="success" class="success-msg">
+        <h1>Yay! See you then! ❤️</h1>
+        <img src="https://media.giphy.com/media/v1.Y2lkPTc5MGI3NjExOHpndWp6Zmt6Y3N6eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eJmVwPXYxX2ludGVybmFsX2dpZl9ieV9pZCZjdD1n/l41lH4ADRtAYnGsLe/giphy.gif" alt="Success">
+    </div>
+
+    <script>
+        const yesBtn = document.getElementById('yesBtn');
+        const noBtn = document.getElementById('noBtn');
+        const question = document.getElementById('question');
+        const container = document.getElementById('container');
+        const success = document.getElementById('success');
+        const img = document.getElementById('displayImg');
+
+        let yesFontSize = 1.2;
+        const noTexts = [
+            "No", "Are you sure?", "Really sure?", "Think again!", 
+            "Last chance!", "Surely not?", "You might regret this!", 
+            "Give it another thought!", "Are you absolutely certain?", 
+            "This could be a mistake!", "Have a heart!", "Don't be so cold!", 
+            "Change of heart?", "Is that your final answer?", "You're breaking my heart ;("
+        ];
+        let noCount = 0;
+
+        noBtn.addEventListener('click', () => {
+            // Make the Yes button bigger
+            yesFontSize += 0.5;
+            yesBtn.style.fontSize = `${yesFontSize}rem`;
+            yesBtn.style.padding = `${yesFontSize * 10}px ${yesFontSize * 20}px`;
+
+            // Change the text of the No button
+            noBtn.innerText = noTexts[Math.min(noCount, noTexts.length - 1)];
+            noCount++;
+        });
+
+        yesBtn.addEventListener('click', () => {
+            container.style.display = 'none';
+            success.style.display = 'block';
+        });
+    </script>
+</body>
+</html>
